@@ -1,21 +1,24 @@
-/* ============================================================
-   API configuration
-   ------------------------------------------------------------
-   Works in three modes without edits:
-   1. Served by the backend itself (http://localhost:5000)  -> /api
-   2. Served by Live Server / another port (e.g. :5500)      -> http://localhost:5000/api
-   3. Opened as a local file                                 -> http://localhost:5000/api
-   Override anytime by setting localStorage.setItem("apiBase", "https://your-api/api")
-   ============================================================ */
+
+/* API configuration */
 (function () {
   const override = localStorage.getItem("apiBase");
   let base;
 
   if (override) {
     base = override;
-  } else if (location.protocol.startsWith("http") && location.port === "5000") {
+  } else if (
+    location.hostname !== "localhost" &&
+    location.hostname !== "127.0.0.1"
+  ) {
+    // Hosted website: frontend and backend use the same domain
+    base = "/api";
+  } else if (
+    location.protocol.startsWith("http") &&
+    location.port === "5000"
+  ) {
     base = "/api";
   } else {
+    // Local development
     base = "http://localhost:5000/api";
   }
 
