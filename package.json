@@ -1,0 +1,21 @@
+{
+  "name": "placement-prep-portal",
+  "version": "1.0.0",
+  "description": "Postgraduate Placement Preparation Portal - MERN stack (Express + MongoDB + vanilla JS frontend) with Student and Placement Officer modules.",
+  "main": "backend/server.js",
+  "scripts": {
+    "install-all": "npm --prefix backend install",
+    "seed": "npm --prefix backend run seed",
+    "start": "npm --prefix backend start",
+    "dev": "npm --prefix backend run dev"
+  },
+  "keywords": [
+    "placement",
+    "aptitude",
+    "mern",
+    "express",
+    "mongodb",
+    "postgraduate"
+  ],
+  "license": "MIT"
+}

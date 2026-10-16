@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Login | PlacementPrep</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <a class="auth-back" href="index.html">← Back to home</a>
+      <div class="auth-head">
+        <div class="icon" style="background:var(--primary-light);color:var(--primary)">🎓</div>
+        <h1>Student Login</h1>
+        <p>Sign in to continue your placement preparation</p>
+      </div>
+
+      <form id="loginForm" novalidate>
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input class="form-control" type="text" id="username" name="username" placeholder="e.g. student1" autocomplete="username" />
+          <div class="field-error" id="usernameError"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input class="form-control" type="password" id="password" name="password" placeholder="Enter your password" autocomplete="current-password" />
+          <div class="field-error" id="passwordError"></div>
+        </div>
+
+        <button class="btn btn-lg btn-block" type="submit" id="submitBtn">Sign In</button>
+      </form>
+
+      <div class="auth-foot">
+        New here? <a href="student-register.html">Create a student account</a>
+      </div>
+      <div class="auth-foot">
+        <a href="officer-login.html">Are you a Placement Officer?</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/student-login.js"></script>
+</body>
+</html>

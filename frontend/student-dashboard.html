@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Dashboard | PlacementPrep</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div id="navbar"></div>
+
+  <main class="container section">
+    <div class="flex justify-between items-center flex-wrap gap-1 mb-3">
+      <div>
+        <h2 id="welcome">Welcome</h2>
+        <p class="text-muted" id="subtitle">Here is your placement preparation overview.</p>
+      </div>
+      <div class="flex gap-1 flex-wrap">
+        <a class="btn" href="aptitude.html">Take a Test</a>
+        <a class="btn btn-outline" href="experiences.html">Share Experience</a>
+      </div>
+    </div>
+
+    <div class="grid grid-4 mb-3">
+      <div class="stat"><div class="label">Tests Taken</div><div class="value primary" id="statTests">0</div></div>
+      <div class="stat"><div class="label">Average Score</div><div class="value success" id="statAvg">0%</div></div>
+      <div class="stat"><div class="label">Best Score</div><div class="value accent" id="statBest">0%</div></div>
+      <div class="stat"><div class="label">Experiences</div><div class="value warning" id="statExp">0</div></div>
+    </div>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="card-title">Recent Test Results</div>
+        <div class="card-sub">Your last five aptitude attempts</div>
+        <div id="recentResults"><div class="spinner"></div></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Category Performance</div>
+        <div class="card-sub">Best score achieved per category</div>
+        <div id="categoryPerformance"><div class="spinner"></div></div>
+      </div>
+    </div>
+
+    <div class="card mt-3">
+      <div class="card-title">My Interview Experiences</div>
+      <div class="card-sub">Submit new experiences or check approval status</div>
+      <div id="myExperiences"><div class="spinner"></div></div>
+    </div>
+  </main>
+
+  <footer class="site-footer"><div class="container">PlacementPrep · Student Module</div></footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/student-dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aptitude Tests | PlacementPrep</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div id="navbar"></div>
+
+  <main class="container section">
+    <div class="section-head">
+      <h2>Aptitude Tests</h2>
+      <p>Pick a category, set the number of questions and start a timed test.</p>
+    </div>
+
+    <div class="card mb-3">
+      <div class="grid grid-2">
+        <div class="form-group">
+          <label for="testLength">Number of Questions</label>
+          <select class="form-control" id="testLength">
+            <option value="5">5 questions (5 min)</option>
+            <option value="10" selected>10 questions (10 min)</option>
+            <option value="15">15 questions (15 min)</option>
+            <option value="20">20 questions (20 min)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="difficulty">Difficulty</label>
+          <select class="form-control" id="difficulty">
+            <option value="">Mixed</option>
+            <option value="Easy">Easy</option>
+            <option value="Medium">Medium</option>
+            <option value="Hard">Hard</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-head"><h2 style="font-size:1.2rem">Choose a Category</h2></div>
+    <div class="grid grid-4 mb-3" id="categoryGrid">
+      <div class="spinner"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Test History</div>
+      <div class="card-sub">All your previous attempts</div>
+      <div id="history"><div class="spinner"></div></div>
+    </div>
+  </main>
+
+  <footer class="site-footer"><div class="container">PlacementPrep · Aptitude Practice</div></footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/aptitude.js"></script>
+</body>
+</html>

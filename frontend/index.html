@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PlacementPrep | Postgraduate Placement Preparation Portal</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container navbar-inner">
+      <a class="brand" href="index.html">
+        <span class="logo">PP</span>
+        <span>PlacementPrep</span>
+      </a>
+      <div class="nav-links">
+        <a href="#modules">Modules</a>
+        <a href="#features">Features</a>
+        <a href="#how">How it works</a>
+      </div>
+      <div class="nav-user">
+        <a class="btn btn-outline btn-sm" href="student-login.html">Student Login</a>
+        <a class="btn btn-sm" href="officer-login.html">Officer Login</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="container">
+      <h1>Crack your campus placement with a <span>structured preparation</span> portal.</h1>
+      <p class="lead">
+        An official placement preparation platform for postgraduate students and the Training &amp;
+        Placement Cell. Practice aptitude tests, share interview experiences, and track progress.
+      </p>
+      <div class="badges">
+        <span class="badge">MongoDB · Express · Node.js</span>
+        <span class="badge">Aptitude Practice</span>
+        <span class="badge">Interview Experiences</span>
+        <span class="badge">Progress Tracking</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="section" id="modules">
+      <div class="section-head">
+        <h2>Choose your module</h2>
+        <p>Select how you want to continue. Each module has its own secure login.</p>
+      </div>
+
+      <div class="module-grid">
+        <!-- Student module -->
+        <div class="module-card student">
+          <div class="icon">🎓</div>
+          <h3>Student Module</h3>
+          <p>Prepare, practice and share. Built for postgraduate students targeting top recruiters.</p>
+          <ul>
+            <li>Take category-wise aptitude tests</li>
+            <li>Instant scoring and detailed review</li>
+            <li>Share and browse interview experiences</li>
+            <li>Track personal progress over time</li>
+          </ul>
+          <a class="btn btn-lg btn-block" href="student-login.html">Continue as Student →</a>
+        </div>
+
+        <!-- Officer module -->
+        <div class="module-card officer">
+          <div class="icon">🏛️</div>
+          <h3>Placement Officer Module</h3>
+          <p>Monitor, moderate and manage the whole placement preparation drive.</p>
+          <ul>
+            <li>View student progress at a glance</li>
+            <li>Approve or reject shared experiences</li>
+            <li>Manage the aptitude question bank</li>
+            <li>Identify top performers and weak areas</li>
+          </ul>
+          <a class="btn btn-lg btn-block btn-outline" href="officer-login.html">Continue as Officer →</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="features">
+      <div class="section-head">
+        <h2>Everything you need, in one portal</h2>
+        <p>Purpose-built features for postgraduate placement preparation.</p>
+      </div>
+      <div class="grid grid-4">
+        <div class="card">
+          <div class="icon" style="font-size:1.8rem">📝</div>
+          <div class="card-title mt-1">Aptitude Tests</div>
+          <p class="text-muted">Quantitative, Logical Reasoning, Verbal Ability and Technical sets with a timed interface.</p>
+        </div>
+        <div class="card">
+          <div class="icon" style="font-size:1.8rem">📊</div>
+          <div class="card-title mt-1">Instant Analytics</div>
+          <p class="text-muted">Automatic grading, percentage scores and per-category performance breakdown.</p>
+        </div>
+        <div class="card">
+          <div class="icon" style="font-size:1.8rem">🤝</div>
+          <div class="card-title mt-1">Interview Experiences</div>
+          <p class="text-muted">Real experiences shared by seniors, verified and approved by the placement cell.</p>
+        </div>
+        <div class="card">
+          <div class="icon" style="font-size:1.8rem">🔐</div>
+          <div class="card-title mt-1">Role-based Access</div>
+          <p class="text-muted">Separate, secure JWT-authenticated logins for students and placement officers.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="how">
+      <div class="section-head">
+        <h2>How it works</h2>
+        <p>Three simple steps to get started.</p>
+      </div>
+      <div class="grid grid-3">
+        <div class="card">
+          <div class="value primary" style="font-size:1.6rem;font-weight:800">1. Register / Login</div>
+          <p class="text-muted mt-1">Students sign up with their details. Officers use credentials issued by the placement cell.</p>
+        </div>
+        <div class="card">
+          <div class="value primary" style="font-size:1.6rem;font-weight:800">2. Practice &amp; Share</div>
+          <p class="text-muted mt-1">Attempt aptitude tests, review answers, and submit interview experiences for approval.</p>
+        </div>
+        <div class="card">
+          <div class="value primary" style="font-size:1.6rem;font-weight:800">3. Track Progress</div>
+          <p class="text-muted mt-1">Students see personal growth; officers monitor the entire batch and moderate content.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      PlacementPrep — Postgraduate Placement Preparation Portal · Built with MongoDB, Express, Node.js &amp; vanilla JS
+    </div>
+  </footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/ui.js"></script>
+  <script>
+    // If already logged in, offer a shortcut back to the dashboard.
+    if (auth.isLoggedIn()) {
+      const user = auth.getUser();
+      const dest = user.role === "officer" ? "officer-dashboard.html" : "student-dashboard.html";
+      const banner = document.createElement("div");
+      banner.className = "container";
+      banner.innerHTML =
+        '<div class="card" style="margin-top:18px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">' +
+        '<span>You are logged in as <strong>' + esc(user.name) + '</strong>.</span>' +
+        '<a class="btn btn-sm" href="' + dest + '">Go to dashboard →</a></div>';
+      document.querySelector("main").prepend(banner);
+    }
+  </script>
+</body>
+</html>

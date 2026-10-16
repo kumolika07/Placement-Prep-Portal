@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Officer Dashboard | PlacementPrep</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div id="navbar"></div>
+
+  <main class="container section">
+    <div class="flex justify-between items-center flex-wrap gap-1 mb-3">
+      <div>
+        <h2 id="welcome">Placement Officer Dashboard</h2>
+        <p class="text-muted">Monitor student progress and manage placement content.</p>
+      </div>
+      <button class="btn" id="refreshBtn">↻ Refresh</button>
+    </div>
+
+    <div class="grid grid-4 mb-3">
+      <div class="stat"><div class="label">Total Students</div><div class="value primary" id="statStudents">0</div></div>
+      <div class="stat"><div class="label">Tests Attempted</div><div class="value accent" id="statTests">0</div></div>
+      <div class="stat"><div class="label">Average Score</div><div class="value success" id="statAvg">0%</div></div>
+      <div class="stat"><div class="label">Pending Reviews</div><div class="value warning" id="statPending">0</div></div>
+    </div>
+
+    <div class="grid grid-2 mb-3">
+      <div class="card">
+        <div class="card-title">Top Performers</div>
+        <div class="card-sub">Ranked by average aptitude score</div>
+        <div id="topPerformers"><div class="spinner"></div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Content Overview</div>
+        <div class="card-sub">Question bank and experiences</div>
+        <div class="grid grid-2">
+          <div class="stat"><div class="label">Questions</div><div class="value primary" id="statQuestions">0</div></div>
+          <div class="stat"><div class="label">Approved Experiences</div><div class="value success" id="statApproved">0</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Students -->
+    <section id="students" class="card mb-3">
+      <div class="card-title">Student Progress</div>
+      <div class="card-sub">Click a student to view their detailed progress</div>
+      <div id="studentsTable"><div class="spinner"></div></div>
+    </section>
+
+    <!-- Moderation -->
+    <section id="moderation" class="card mb-3">
+      <div class="flex justify-between items-center flex-wrap gap-1">
+        <div>
+          <div class="card-title">Experience Moderation</div>
+          <div class="card-sub" style="margin-bottom:0">Approve or reject submitted interview experiences</div>
+        </div>
+        <select class="form-control" id="moderationFilter" style="max-width:200px">
+          <option value="pending">Pending</option>
+          <option value="approved">Approved</option>
+          <option value="rejected">Rejected</option>
+          <option value="">All</option>
+        </select>
+      </div>
+      <div id="moderationList" class="mt-2"><div class="spinner"></div></div>
+    </section>
+
+    <!-- Questions -->
+    <section id="questions" class="card">
+      <div class="flex justify-between items-center flex-wrap gap-1">
+        <div>
+          <div class="card-title">Aptitude Question Bank</div>
+          <div class="card-sub" style="margin-bottom:0">Add or remove aptitude questions</div>
+        </div>
+        <button class="btn" id="openQuestionBtn">+ Add Question</button>
+      </div>
+      <div class="form-group mt-2" style="max-width:280px">
+        <select class="form-control" id="questionCategoryFilter">
+          <option value="">All categories</option>
+          <option>Quantitative</option>
+          <option>Logical Reasoning</option>
+          <option>Verbal Ability</option>
+          <option>Technical</option>
+        </select>
+      </div>
+      <div id="questionsList"><div class="spinner"></div></div>
+    </section>
+  </main>
+
+  <!-- Student detail modal -->
+  <div class="modal-backdrop" id="studentModal">
+    <div class="modal">
+      <div class="modal-head">
+        <h3 id="studentModalTitle">Student Details</h3>
+        <button class="modal-close" id="closeStudentBtn">&times;</button>
+      </div>
+      <div id="studentModalBody"></div>
+    </div>
+  </div>
+
+  <!-- Add question modal -->
+  <div class="modal-backdrop" id="questionModal">
+    <div class="modal">
+      <div class="modal-head">
+        <h3>Add Aptitude Question</h3>
+        <button class="modal-close" id="closeQuestionBtn">&times;</button>
+      </div>
+      <form id="questionForm" novalidate>
+        <div class="form-group">
+          <label for="qCategory">Category *</label>
+          <select class="form-control" id="qCategory">
+            <option>Quantitative</option>
+            <option>Logical Reasoning</option>
+            <option>Verbal Ability</option>
+            <option>Technical</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="qText">Question *</label>
+          <textarea class="form-control" id="qText" rows="2" placeholder="Enter the question..."></textarea>
+          <div class="field-error" id="qTextError"></div>
+        </div>
+        <div class="form-group"><label for="qOption0">Option A *</label><input class="form-control" id="qOption0" /></div>
+        <div class="form-group"><label for="qOption1">Option B *</label><input class="form-control" id="qOption1" /></div>
+        <div class="form-group"><label for="qOption2">Option C *</label><input class="form-control" id="qOption2" /></div>
+        <div class="form-group"><label for="qOption3">Option D *</label><input class="form-control" id="qOption3" /></div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="qCorrect">Correct Option *</label>
+            <select class="form-control" id="qCorrect">
+              <option value="0">A</option>
+              <option value="1">B</option>
+              <option value="2">C</option>
+              <option value="3">D</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="qDifficulty">Difficulty</label>
+            <select class="form-control" id="qDifficulty">
+              <option>Easy</option>
+              <option selected>Medium</option>
+              <option>Hard</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="qExplanation">Explanation (optional)</label>
+          <textarea class="form-control" id="qExplanation" rows="2"></textarea>
+        </div>
+        <div class="flex gap-1 justify-between">
+          <button type="button" class="btn btn-ghost" id="cancelQuestionBtn">Cancel</button>
+          <button type="submit" class="btn" id="questionSubmitBtn">Add Question</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <footer class="site-footer"><div class="container">PlacementPrep · Officer Module</div></footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/officer-dashboard.js"></script>
+</body>
+</html>

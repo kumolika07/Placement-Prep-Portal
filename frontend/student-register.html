@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Registration | PlacementPrep</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <a class="auth-back" href="student-login.html">← Back to login</a>
+      <div class="auth-head">
+        <div class="icon" style="background:var(--primary-light);color:var(--primary)">📝</div>
+        <h1>Create Student Account</h1>
+        <p>Register to start preparing for placements</p>
+      </div>
+
+      <form id="registerForm" novalidate>
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input class="form-control" type="text" id="name" placeholder="e.g. Rahul Verma" />
+          <div class="field-error" id="nameError"></div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input class="form-control" type="text" id="username" placeholder="min. 4 characters" />
+            <div class="field-error" id="usernameError"></div>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input class="form-control" type="email" id="email" placeholder="you@college.edu" />
+            <div class="field-error" id="emailError"></div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input class="form-control" type="password" id="password" placeholder="min. 6 characters" />
+            <div class="field-error" id="passwordError"></div>
+          </div>
+          <div class="form-group">
+            <label for="confirmPassword">Confirm Password</label>
+            <input class="form-control" type="password" id="confirmPassword" placeholder="re-enter password" />
+            <div class="field-error" id="confirmPasswordError"></div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="degree">Degree</label>
+            <select class="form-control" id="degree">
+              <option>Postgraduate</option>
+              <option>M.Tech</option>
+              <option>M.E</option>
+              <option>MCA</option>
+              <option>MBA</option>
+              <option>M.Sc</option>
+              <option>MA</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="branch">Branch / Department</label>
+            <input class="form-control" type="text" id="branch" placeholder="e.g. Computer Science" />
+            <div class="field-error" id="branchError"></div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="graduationYear">Graduation Year</label>
+            <input class="form-control" type="number" id="graduationYear" min="2020" max="2035" />
+            <div class="field-error" id="graduationYearError"></div>
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone (optional)</label>
+            <input class="form-control" type="text" id="phone" placeholder="10-digit number" />
+            <div class="field-error" id="phoneError"></div>
+          </div>
+        </div>
+
+        <button class="btn btn-lg btn-block" type="submit" id="submitBtn">Create Account</button>
+      </form>
+
+      <div class="auth-foot">
+        Already have an account? <a href="student-login.html">Sign in</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/student-register.js"></script>
+</body>
+</html>

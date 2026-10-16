@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Interview Experiences | PlacementPrep</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div id="navbar"></div>
+
+  <main class="container section">
+    <div class="flex justify-between items-center flex-wrap gap-1 mb-3">
+      <div class="section-head" style="margin:0">
+        <h2>Interview Experiences</h2>
+        <p>Learn from real experiences shared by your seniors.</p>
+      </div>
+      <button class="btn" id="openShareBtn">+ Share Your Experience</button>
+    </div>
+
+    <div class="card mb-3">
+      <div class="grid grid-3">
+        <div class="form-group" style="margin:0">
+          <label for="filterCompany">Filter by Company</label>
+          <input class="form-control" type="text" id="filterCompany" placeholder="e.g. Infosys" />
+        </div>
+        <div class="form-group" style="margin:0">
+          <label for="filterRole">Filter by Role</label>
+          <input class="form-control" type="text" id="filterRole" placeholder="e.g. Developer" />
+        </div>
+        <div class="form-group" style="margin:0;display:flex;align-items:flex-end;gap:8px">
+          <button class="btn w-100" id="applyFilterBtn">Search</button>
+          <button class="btn btn-ghost" id="resetFilterBtn">Reset</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="experienceList"><div class="spinner"></div></div>
+
+    <div class="card mt-3">
+      <div class="card-title">My Submissions</div>
+      <div class="card-sub">Experiences you have shared and their approval status</div>
+      <div id="mySubmissions"><div class="spinner"></div></div>
+    </div>
+  </main>
+
+  <!-- Share modal -->
+  <div class="modal-backdrop" id="shareModal">
+    <div class="modal">
+      <div class="modal-head">
+        <h3>Share Your Interview Experience</h3>
+        <button class="modal-close" id="closeShareBtn">&times;</button>
+      </div>
+
+      <form id="shareForm" novalidate>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="company">Company *</label>
+            <input class="form-control" id="company" placeholder="e.g. Infosys" />
+            <div class="field-error" id="companyError"></div>
+          </div>
+          <div class="form-group">
+            <label for="role">Role / Position *</label>
+            <input class="form-control" id="role" placeholder="e.g. Systems Engineer" />
+            <div class="field-error" id="roleError"></div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="jobType">Job Type</label>
+            <select class="form-control" id="jobType">
+              <option>Full Time</option>
+              <option>Internship</option>
+              <option>Internship + PPO</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="pkg">Package (optional)</label>
+            <input class="form-control" id="pkg" placeholder="e.g. 6.5 LPA" />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="location">Location</label>
+            <input class="form-control" id="location" placeholder="e.g. Pune" />
+          </div>
+          <div class="form-group">
+            <label for="year">Year</label>
+            <input class="form-control" type="number" id="year" min="2015" max="2035" />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="difficulty">Difficulty</label>
+            <select class="form-control" id="difficulty">
+              <option>Easy</option>
+              <option selected>Medium</option>
+              <option>Hard</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="selectionStatus">Your Result</label>
+            <select class="form-control" id="selectionStatus">
+              <option selected>Selected</option>
+              <option>Rejected</option>
+              <option>On Hold</option>
+              <option>Waiting</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="content">Your Experience *</label>
+          <textarea class="form-control" id="content" rows="5" placeholder="Describe the rounds, questions asked, and how you prepared..."></textarea>
+          <div class="field-error" id="contentError"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="tips">Tips for Juniors (optional)</label>
+          <textarea class="form-control" id="tips" rows="2" placeholder="One or two tips to crack this company"></textarea>
+        </div>
+
+        <p class="form-hint mb-2">Your submission will be reviewed by the Placement Officer before it is published.</p>
+
+        <div class="flex gap-1 justify-between">
+          <button type="button" class="btn btn-ghost" id="cancelShareBtn">Cancel</button>
+          <button type="submit" class="btn" id="shareSubmitBtn">Submit for Approval</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <footer class="site-footer"><div class="container">PlacementPrep · Interview Experiences</div></footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/experiences.js"></script>
+</body>
+</html>
