@@ -1,27 +1,30 @@
+/* ============================================================
+   API configuration
+   ------------------------------------------------------------
+   Builds a list of candidate API base URLs. api.js then picks the
+   first one that answers a /health request, so the same code works:
 
-/* API configuration */
+   1. Deployed (Render / any host)  -> same origin  e.g. https://your-app.onrender.com/api
+   2. Live Server on :5500          -> http://localhost:5000/api
+   3. Opened as a local file        -> http://localhost:5000/api
+
+   Override anytime:
+      localStorage.setItem("apiBase", "https://your-api.example.com/api")
+   ============================================================ */
 (function () {
   const override = localStorage.getItem("apiBase");
-  let base;
+  const candidates = [];
 
   if (override) {
-    base = override;
-  } else if (
-    location.hostname !== "localhost" &&
-    location.hostname !== "127.0.0.1"
-  ) {
-    // Hosted website: frontend and backend use the same domain
-    base = "/api";
-  } else if (
-    location.protocol.startsWith("http") &&
-    location.port === "5000"
-  ) {
-    base = "/api";
+    candidates.push(override.replace(/\/+$/, ""));
   } else {
-    // Local development
-    base = "http://localhost:5000/api";
+    if (location.protocol === "http:" || location.protocol === "https:") {
+      candidates.push(location.origin.replace(/\/+$/, "") + "/api");
+    }
+    candidates.push("http://localhost:5000/api");
   }
 
-  window.API_BASE = base;
-  console.log("[config] API base ->", window.API_BASE);
+  window.API_CANDIDATES = candidates;
+  window.API_BASE = candidates[0];
+  console.log("[config] API candidates ->", candidates.join(" , "));
 })();

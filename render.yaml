@@ -1,0 +1,33 @@
+# ============================================================
+#  Render blueprint for the Placement Preparation Portal
+#  Deploy: Render Dashboard -> New -> Blueprint -> select this repo
+# ============================================================
+services:
+  - type: web
+    name: placement-prep-portal
+    runtime: node
+    plan: free
+    buildCommand: npm --prefix backend install
+    startCommand: npm --prefix backend start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: "20"
+      # MongoDB Atlas connection string (free M0 cluster is fine)
+      - key: MONGO_URI
+        sync: false
+      # Secret used to sign JWTs
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRES_IN
+        value: 7d
+      # Placement Officer login (created automatically on first boot)
+      - key: OFFICER_USERNAME
+        value: officer1
+      - key: OFFICER_PASSWORD
+        value: officer123
+      - key: OFFICER_NAME
+        value: Placement Officer
+      # Set to false to stop creating the demo students
+      - key: SEED_DEMO_STUDENTS
+        value: "true"

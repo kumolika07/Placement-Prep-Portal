@@ -187,7 +187,52 @@ The backend **also serves the frontend**, so just open:
 
 That's it — the homepage with the two modules (Student & Placement Officer) will load.
 
-> 🔁 **Live Server option (frontend-only):** you can instead open the `frontend` folder with VS Code → Live Server on port 5500. `frontend/js/config.js` automatically points the API calls to `http://localhost:5000/api` when the page is not served from port 5000.
+> 🔁 **Live Server option (frontend-only):** you can instead open the `frontend` folder with VS Code → Live Server on port 5500. `frontend/js/config.js` automatically detects which API to use by health-checking each candidate, so it works on a deployed host, on Live Server, and from a local file with no edits.
+
+---
+
+## ☁️ Deploy on Render (cloud hosting)
+
+The repository contains a `render.yaml` blueprint, so the whole app deploys in one click.
+
+### Step 1 — Create a free MongoDB Atlas database
+1. Sign up at <https://www.mongodb.com/atlas> → create a **free M0** cluster.
+2. **Database Access** → create a user (e.g. `portal` / a strong password).
+3. **Network Access** → allow access from anywhere (`0.0.0.0/0`) — required on Render's free tier.
+4. **Deployments → Add new deployment → Atlas** → copy the connection string. It looks like:
+   ```
+   mongodb+srv://portal:<password>@cluster0.xxxxx.mongodb.net/placement_prep_portal
+   ```
+
+### Step 2 — Deploy on Render
+1. Push this project to a GitHub repository.
+2. In Render → **New → Blueprint** → select the repo. Render reads `render.yaml` automatically.
+3. When asked for the `MONGO_URI` value, paste the Atlas connection string.
+4. Click **Apply** → wait for the build. Health check path `/api/health` turns green when ready.
+
+**Manual setup (instead of the blueprint):**
+
+| Setting | Value |
+|---|---|
+| Root Directory | *(leave empty — repo root)* |
+| Build Command | `npm --prefix backend install` |
+| Start Command | `npm --prefix backend start` |
+| Health Check Path | `/api/health` |
+| Environment | `MONGO_URI=<atlas string>`, `JWT_SECRET=<random>`, `JWT_EXPIRES_IN=7d`, `OFFICER_USERNAME=officer1`, `OFFICER_PASSWORD=officer123` |
+
+### Step 3 — Nothing else to do ✅
+On the **first boot** the server automatically creates what a fresh database is missing, so the app is never empty or unusable:
+
+```
+[autoseed] Created officer account -> username: officer1 | password: officer123
+[autoseed] Seeded 32 aptitude questions
+[autoseed] Created demo student -> username: student1 | password: student123
+[autoseed] Created demo student -> username: student2 | password: student123
+```
+
+This is why a new deployment never shows **"Not available"** on the test categories — the question bank is always populated. The seed is idempotent: it never overwrites existing data.
+
+To run it manually instead (e.g. from the Render **Shell** tab): `cd backend && npm run seed`.
 
 ---
 
@@ -199,7 +244,7 @@ That's it — the homepage with the two modules (Student & Placement Officer) wi
 | Student (2nd)     | `student2`  | `student123` |
 | Placement Officer | `officer1`  | `officer123` |
 
-New students can also **register** from the student login page.
+> The officer credentials are configurable with the `OFFICER_USERNAME` / `OFFICER_PASSWORD` environment variables (see `render.yaml`). The officer account is created automatically on first boot if it does not exist. New students can also **register** from the student login page.
 
 ---
 
@@ -271,7 +316,9 @@ curl -X POST http://localhost:5000/api/auth/login `
   2. First start is slow (several minutes) because antivirus scans the binary. To make it fast, add an **exclusion for `C:\Users\LENOVO\AppData\Local\Temp\opencode\mongodb7`** in Windows Security → Virus & threat protection → Exclusions.
   3. Verify with `Test-NetConnection 127.0.0.1 -Port 27017`. Alternatively use a free **MongoDB Atlas** cluster and paste its `mongodb+srv://...` string into `MONGO_URI` in `backend/.env`.
 - **Port 5000 in use** → change `PORT` in `.env` and restart the server.
-- **"Cannot reach the server"** in the browser → the backend is running but the frontend was opened from a different port; restart the backend, or use the Live Server URL on port 5500 (config picks `http://localhost:5000/api` automatically).
+- **"Cannot reach the server"** in the browser → the frontend probes every candidate API URL and picks the first that answers `/health`, so this normally self-corrects. If it persists, open the browser console and check the `[config] API candidates ->` line, then set it manually with `localStorage.setItem("apiBase", "https://your-app.onrender.com/api")` and reload.
+- **Every test category shows "Not available"** → the question bank is empty in your database. The server now seeds it automatically on boot (`[autoseed] Seeded 32 aptitude questions`). If you are on an old deployment, redeploy, or run `npm run seed` once in the Render **Shell** tab.
+- **Cannot log in as Placement Officer** → the officer account is created on first boot with the `OFFICER_USERNAME` / `OFFICER_PASSWORD` env values (default `officer1` / `officer123`). Check the Render logs for the `[autoseed]` lines to confirm.
 - **Duplicate username / email on signup** → the controller returns a clear message; choose another value.
 
 ---

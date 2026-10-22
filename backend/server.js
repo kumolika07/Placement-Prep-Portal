@@ -6,6 +6,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const connectDB = require("./config/db");
+const autoSeed = require("./scripts/autoSeed");
 const { notFound, errorHandler } = require("./middleware/errorMiddleware");
 
 const authRoutes = require("./routes/authRoutes");
@@ -65,6 +66,7 @@ app.use(errorHandler);
 // ---- Boot ----
 const start = async () => {
   await connectDB();
+  await autoSeed();
   app.listen(PORT, () => {
     console.log(`[server] Placement Prep Portal running on http://localhost:${PORT}`);
     console.log(`[server] API base: http://localhost:${PORT}/api`);

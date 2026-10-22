@@ -1,10 +1,49 @@
 /* ============================================================
    Thin fetch wrapper around the REST API.
    Throws an Error with a readable message on failure.
+
+   The API base URL is resolved automatically: the first candidate
+   that answers /health wins. This makes the frontend work on a
+   deployed host (Render), on Live Server, and from a local file.
    ============================================================ */
+
+const ping = async (base) => {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 6000);
+  try {
+    const res = await fetch(`${base}/health`, { signal: controller.signal });
+    return res.ok;
+  } catch (e) {
+    return false;
+  } finally {
+    clearTimeout(timer);
+  }
+};
+
+let resolvedBase = null;
+
+const resolveBase = async () => {
+  if (resolvedBase) return resolvedBase;
+  const candidates = window.API_CANDIDATES || [window.API_BASE];
+
+  for (const candidate of candidates) {
+    if (await ping(candidate)) {
+      resolvedBase = candidate;
+      window.API_BASE = candidate;
+      console.log("[api] using base ->", candidate);
+      return resolvedBase;
+    }
+  }
+
+  // Nothing answered - keep the first candidate so the error message is clear.
+  resolvedBase = candidates[0];
+  window.API_BASE = resolvedBase;
+  return resolvedBase;
+};
 
 const api = {
   request: async (path, { method = "GET", body, auth = true } = {}) => {
+    const base = await resolveBase();
     const headers = { "Content-Type": "application/json" };
 
     if (auth) {
@@ -14,15 +53,13 @@ const api = {
 
     let response;
     try {
-      response = await fetch(`${window.API_BASE}${path}`, {
+      response = await fetch(`${base}${path}`, {
         method,
         headers,
         body: body ? JSON.stringify(body) : undefined,
       });
     } catch (networkError) {
-      throw new Error(
-        "Cannot reach the server. Make sure the backend is running at " + window.API_BASE
-      );
+      throw new Error("Cannot reach the server at " + base + ". Please try again.");
     }
 
     let data = null;
